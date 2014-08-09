@@ -42,16 +42,16 @@ The ABEL extension library is mostly about two ideas: Making generic,
 easy, and reusable complex queries, hiding the complexity. Second, it
 is about making various helper classes such as DATA_IDENTIFIED.
 
-	* DATA_ACCESSOR and AE_DATA_ACCESSOR [G]. Both of these classes allow
+	* AE_DATA_ACCESSOR and AE_OBJECT_DATA_ACCESSOR [G]. Both of these classes allow
 		for query access to a database, where DATA_ACCESSOR is generic
-		to any object type stored in the database and AE_DATA_ACCESSOR [G]
+		to any object type stored in the database and AE_OBJECT_DATA_ACCESSOR [G]
 		is about a specific object type (e.g. the G generic parameter).
-	* DATA_IDENTIFIED is the heart of adding facilities like "primary_key" to
+	* AE_DATA_IDENTIFIED is the heart of adding facilities like "primary_key" to
 		objects being stored in the database. Currently, ABEL offers no
 		way to access the primary keys and other common database facilities.
 		I believe this is due to the cross-database nature of the library
 		where the target repositories may or may not have the same
-		features available in them. DATA_IDENTIFIED attempts to bring
+		features available in them. AE_DATA_IDENTIFIED attempts to bring
 		these common facilities like "primary_key" to every database.
 
 
@@ -128,34 +128,34 @@ Examples
 Clusters
 ==============
 
-	2014 August: None
+	See NOTES.txt
 
 See also
 ==============
 
-	2014 August: None
+	See NOTES.txt
 
 Renames
 ==============
 
-	2014 August: Planning to add the "AE_*" prefix to all classes. Still studying naming conventions.
+	See NOTES.txt
 
 Bugs
 ==============
 
-	2014 August: Unaware of any at this time, but I know they are there.	
+	See NOTES.txt
 
 Todos
 ==============
 
-	2014 August: Add test code as examples for DATA_* classes, which were recently added.
+	See NOTES.txt
 
 Refactors
 ==============
 
-	2014 August: Possible refactor of DATA_ACCESSOR to AE_DATA_ACCESSOR. Still studying this.
+	See NOTES.txt
 
 Fixmes
 ==============
 
-	2014 August: None
+	See NOTES.txt
