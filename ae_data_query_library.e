@@ -13,7 +13,7 @@ note
 	revision: "$Revision$"
 
 class
-	DATA_QUERY_LIBRARY [OBJ -> ANY]
+	AE_DATA_QUERY_LIBRARY [OBJ -> ANY]
 
 create
 	make_with_repository

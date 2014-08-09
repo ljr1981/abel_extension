@@ -17,18 +17,18 @@ prerequisites: "[<item_to_study_before_continuing>
 basics: "[<library_cluster_only_basics_of_design>
 	The ABEL extension library is mostly about two ideas: Making generic,
 	easy, and reusable complex queries, hiding the complexity. Second, it
-	is about making various helper classes such as DATA_IDENTIFIED.
+	is about making various helper classes such as AE_DATA_IDENTIFIED.
 
-	* DATA_ACCESSOR and AE_DATA_ACCESSOR [G]. Both of these classes allow
+	* AE_DATA_ACCESSOR and AE_OBJECT_DATA_ACCESSOR [G]. Both of these classes allow
 		for query access to a database, where DATA_ACCESSOR is generic
 		to any object type stored in the database and AE_DATA_ACCESSOR [G]
 		is about a specific object type (e.g. the G generic parameter).
-	* DATA_IDENTIFIED is the heart of adding facilities like "primary_key" to
+	* AE_DATA_IDENTIFIED is the heart of adding facilities like "primary_key" to
 		objects being stored in the database. Currently, ABEL offers no
 		way to access the primary keys and other common database facilities.
 		I believe this is due to the cross-database nature of the library
 		where the target repositories may or may not have the same
-		features available in them. DATA_IDENTIFIED attempts to bring
+		features available in them. AE_DATA_IDENTIFIED attempts to bring
 		these common facilities like "primary_key" to every database.
 	]"
 usage: "[<optional_statement_of_designer_intended_use>
@@ -86,7 +86,7 @@ see_also: "[<references_to_relevant_additional_or_related_information>
 	2014 August: None
 	]"
 renames: "[<optional_list_of_items_needing_renaming>
-	2014 August: Planning to add the "AE_*" prefix to all classes. Still studying naming conventions.
+	2014 August: None
 	]"
 bugs: "[<required_for_bugs_with_external_links_as_EIS_if_possible>
 	2014 August: Unaware of any at this time, but I know they are there.	
@@ -95,7 +95,7 @@ todos: "[<required_for_known_todo_action_items_needing_completion>
 	2014 August: Add test code as examples for DATA_* classes, which were recently added.
 	]"
 refactors: "[<required_for_known_refactors_needing_completion>
-	2014 August: Possible refactor of DATA_ACCESSOR to AE_DATA_ACCESSOR. Still studying this.
+	2014 August: None
 	]"
 fixmes: "[<required_for_known_fixme_items>
 	2014 August: None

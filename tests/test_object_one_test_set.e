@@ -22,7 +22,7 @@ feature {NONE} -- Initialization
 			-- <Precursor>
 		do
 			Precursor
-			create test_data_accessor.make_with_repository ((create {PS_IN_MEMORY_REPOSITORY_FACTORY}.make).new_repository)
+			test_database := (create {PS_IN_MEMORY_REPOSITORY_FACTORY}.make).new_repository
 		end
 
 feature -- Test routines
@@ -38,28 +38,31 @@ feature -- Test routines
 			l_transaction: PS_TRANSACTION
 			l_object: TEST_OBJECT_ONE
 		do
-			l_transaction := test_database.new_transaction
-			assert ("no_transaction_creation_error", not l_transaction.has_error)
+				-- Object one
 			create l_object
-			l_object.set_data_id (test_data_accessor.maximum_data_id + 1)
+			l_object.set_primary_key_from_database (test_database)
+
+			l_transaction := test_database.new_transaction
 			l_transaction.insert (l_object)
-			assert ("l_object_is_persistent", l_transaction.is_persistent (l_object))
-			l_transaction.update (l_object)
 			l_transaction.commit
 
-			assert_equals ("has_data_id_max_1", 1, test_data_accessor.maximum_data_id)
+			assert_equals ("has_data_id_max_1", (1).to_integer_64, l_object.primary_key)
+
+				-- Object two
+			create l_object
+			l_object.set_primary_key_from_database (test_database)
+
+			l_transaction := test_database.new_transaction
+			l_transaction.insert (l_object)
+			l_transaction.commit
+
+			assert_equals ("has_data_id_max_2", (2).to_integer_64, l_object.primary_key)
 		end
 
 feature {NONE} -- Implementation: Database
 
 	test_database: PS_REPOSITORY
 			-- Primary product database.
-		do
-			Result := test_data_accessor.repository
-		end
-
-	test_data_accessor: AE_DATA_ACCESSOR [TEST_OBJECT_ONE]
-			-- Primary query factory and product database
 
 end
 

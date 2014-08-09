@@ -16,7 +16,7 @@ note
 	revision: "$Revision$"
 
 deferred class
-	DATA_IDENTIFIED
+	AE_DATA_IDENTIFIED
 
 feature -- Access
 
@@ -49,7 +49,7 @@ feature -- Basic Operations
 		require
 			no_primary_key: primary_key <= no_primary_key
 		do
-			set_primary_key ((create {DATA_ACCESSOR}).maximum_primary_key (a_database, tuple_query_anchor) + primary_key_increment_step_value)
+			set_primary_key ((create {AE_DATA_ACCESSOR}).maximum_primary_key (a_database, tuple_query_anchor) + primary_key_increment_step_value)
 		ensure
 			primary_key_set: primary_key >= some_primary_key
 		end
@@ -72,7 +72,7 @@ feature -- Settings
 
 feature {NONE} -- Implementation: Anchors
 
-	tuple_query_anchor: PS_TUPLE_QUERY [DATA_IDENTIFIED]
+	tuple_query_anchor: PS_TUPLE_QUERY [AE_DATA_IDENTIFIED]
 			-- TUPLE query anchor for Current.
 		note
 			purpose: "[
@@ -80,10 +80,34 @@ feature {NONE} -- Implementation: Anchors
 				]"
 			how: "[
 				In the direct descendent declaration, change the generic
-				from ANY to "like Current", which will force the type
-				conformance of the anchor to change from ANY to whatever
-				the type is of the descendent (otherwise it would remain
-				ANY if left at this level).
+				from [ANY] to "[like Current]", which will force the type
+				conformance of the anchor to change from ANY of Current
+				to the generic parameter type declared in the descendent. 
+				
+				Also, add a "do create Result.make end", which will handle
+				creation on-demand. See example below.
+				]"
+			example: "[
+				tuple_query_anchor: PS_TUPLE_QUERY [like Current]
+						-- <Precursor>
+					do
+						create Result.make
+					end
+				]"
+			caution: "[
+				If you attempt to make this feature attached, but created by
+				the creation procedure of the descendent class (e.g. you
+				make the descendent responsible for creation of this feature
+				instead of making it either detachable and creating it at the
+				point-of-use -OR- doing as the "example" above), then when
+				you attempt to persist using "transaction.insert (object)",
+				ABEL will set up an endless loop, trying to create instances
+				and persist each one to the database. 
+				
+				This feature is NOT intended to persist to the database. Thus, 
+				ensure that it is either detachable or a query-routine, so ABEL 
+				will ignore it in the internal reflection used to identify 
+				persistable features.
 				]"
 		deferred
 		end
