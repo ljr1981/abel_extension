@@ -1,9 +1,10 @@
-abel_extension
+ABEL Extension
 ==============
 
 An extension library to the Eiffel ABEL library
 
-Title==============
+Title
+==============
 
 ABEL Extension Library
 
