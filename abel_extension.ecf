@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<system xmlns="http://www.eiffel.com/developers/xml/configuration-1-13-0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.eiffel.com/developers/xml/configuration-1-13-0 http://www.eiffel.com/developers/xml/configuration-1-13-0.xsd" name="abel_extension" uuid="84532C63-50B2-4B89-962E-087CFDAA08F3" library_target="abel_extension">
+	<description>ABEL Extension Library</description>
+	<target name="abel_extension">
+		<root all_classes="true"/>
+		<version major="1" minor="0" release="0" build="1"/>
+		<file_rule>
+			<exclude>/EIFGENs$</exclude>
+			<exclude>/CVS$</exclude>
+			<exclude>/tests$</exclude>
+			<exclude>/.svn$</exclude>
+		</file_rule>
+		<option warning="true" void_safety="transitional">
+			<assertions precondition="true" postcondition="true" check="true" invariant="true" loop="true" supplier_precondition="true"/>
+		</option>
+		<setting name="console_application" value="true"/>
+		<library name="abel_connector_sqlite" location="C:\Users\Larry_2\Documents\Eiffel User Files\14.05\projects\abel\connector_sqlite\connector_sqlite.ecf"/>
+		<library name="abel_core" location="C:\Users\Larry_2\Documents\Eiffel User Files\14.05\projects\abel\core\core.ecf"/>
+		<library name="base" location="$ISE_LIBRARY\library\base\base-safe.ecf"/>
+		<library name="decimal" location="C:\Program Files (x86)\Eiffel Software\EiffelStudio 14.05 GPL\contrib\library\math\decimal\decimal\decimal-safe.ecf"/>
+		<library name="vision2" location="$ISE_LIBRARY\library\vision2\vision2-safe.ecf"/>
+		<cluster name="abel_extension" location=".\" recursive="true"/>
+	</target>
+	<target name="test" extends="abel_extension">
+		<root class="APPLICATION" feature="make"/>
+		<file_rule>
+			<exclude>/EIFGENs$</exclude>
+			<exclude>/CVS$</exclude>
+			<exclude>/.svn$</exclude>
+		</file_rule>
+		<library name="test_set_helper" location="C:\Users\Larry_2\Documents\GitHub\test_set_helper\test_set_helper.ecf"/>
+		<library name="testing" location="$ISE_LIBRARY\library\testing\testing-safe.ecf"/>
+		<cluster name="tests" location=".\tests\" recursive="true"/>
+	</target>
+</system>
