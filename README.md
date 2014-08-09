@@ -67,7 +67,8 @@ Cautions
 Things to watch out for
 
 	
-Generics==============
+Generics
+==============
 
 Any clarification needed for generic parameters
 
