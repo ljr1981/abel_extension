@@ -1,3 +1,7 @@
+See the Wiki for this project for the support link or direct access at:
+
+https://docs.google.com/forms/d/1P0ZswpsoGdmmJsQhvRBw6SXaUM6iDRbq44HUQA2J2I4/viewform
+
 ABEL Extension
 ==============
 
