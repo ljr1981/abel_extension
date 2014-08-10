@@ -20,8 +20,8 @@ basics: "[<library_cluster_only_basics_of_design>
 	is about making various helper classes such as AE_DATA_IDENTIFIED.
 
 	* AE_DATA_ACCESSOR and AE_OBJECT_DATA_ACCESSOR [G]. Both of these classes allow
-		for query access to a database, where DATA_ACCESSOR is generic
-		to any object type stored in the database and AE_DATA_ACCESSOR [G]
+		for query access to a database, where AE_DATA_ACCESSOR is generic
+		to any object type stored in the database and AE_OBJECT_DATA_ACCESSOR [G]
 		is about a specific object type (e.g. the G generic parameter).
 	* AE_DATA_IDENTIFIED is the heart of adding facilities like "primary_key" to
 		objects being stored in the database. Currently, ABEL offers no
