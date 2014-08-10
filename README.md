@@ -1,7 +1,7 @@
 ABEL Extension
 ==============
 
-An extension library to the Eiffel ABEL library
+An extension library to the Eiffel ABEL library.
 
 Title
 ==============
@@ -133,7 +133,7 @@ Clusters
 See also
 ==============
 
-	See NOTES.txt
+	https://docs.google.com/forms/d/1P0ZswpsoGdmmJsQhvRBw6SXaUM6iDRbq44HUQA2J2I4/viewform
 
 Renames
 ==============
