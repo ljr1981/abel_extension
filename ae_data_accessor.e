@@ -6,10 +6,16 @@ note
 		To facilitate object-agnostic access to data contained in some PS_REPOSITORY.
 		]"
 	how: "[
-		By using database and query references to take action on in
+		By using database and query references to take action in
 		ways that accomplish the goal of each feature, where the goal is
-		either some answer to a question or a a group of objects resulting
-		from the database access.
+		either answering some question like MIN, MAX, COUNT, AVERAGE, etc.,
+		or returning some result-set of objects.
+		]"
+	glossary: "[
+		object-agnostic: Access to the backend database that is not based on a known
+			or specific object (from this libraries point of view). For example:
+			the feature `maximum_primary_key' only cares that the object is 
+			AE_DATA_IDENTIFIED and is unconcerned with a specific type.
 		]"
 	author: "Larry Rix"
 	date: "$Date$"
@@ -19,6 +25,49 @@ class
 	AE_DATA_ACCESSOR
 
 feature -- Access
+
+	average (a_database: PS_REPOSITORY; a_tuple_query: PS_TUPLE_QUERY [AE_DATA_IDENTIFIED]; a_field_name: STRING): TUPLE [t_average, t_total, t_count: REAL]
+		local
+			l_projection: ARRAYED_LIST [STRING]
+			l_counter: INTEGER
+			l_total: REAL
+		do
+			execute_tuple_query_on_database (a_database, a_tuple_query, <<a_field_name>>)
+			across a_tuple_query as ic_cursor loop
+				l_counter := l_counter + 1
+				if attached {REAL} ic_cursor.item.item (first_tuple_item) as al_value then
+					l_total := l_total + al_value
+				elseif attached {INTEGER} ic_cursor.item.item (first_tuple_item) as al_value then
+					l_total := l_total + al_value.to_real
+				elseif attached {INTEGER_32} ic_cursor.item.item (first_tuple_item) as al_value then
+					l_total := l_total + al_value.to_real
+				elseif attached {INTEGER_64} ic_cursor.item.item (first_tuple_item) as al_value then
+					l_total := l_total + al_value.to_real
+				elseif attached {NATURAL_8} ic_cursor.item.item (first_tuple_item) as al_value then
+					l_total := l_total + al_value.to_real_32
+				elseif attached {NATURAL_16} ic_cursor.item.item (first_tuple_item) as al_value then
+					l_total := l_total + al_value.to_real_32
+				elseif attached {NATURAL_32} ic_cursor.item.item (first_tuple_item) as al_value then
+					l_total := l_total + al_value.to_real_32
+				elseif attached {NATURAL_64} ic_cursor.item.item (first_tuple_item) as al_value then
+					l_total := l_total + al_value.to_real_32
+				end
+			end
+			a_tuple_query.close
+			Result := [l_total / l_counter.to_real, l_total, l_counter.to_real]
+		end
+
+	count (a_database: PS_REPOSITORY; a_tuple_query: PS_TUPLE_QUERY [AE_DATA_IDENTIFIED]): INTEGER
+			-- Count of objects returned from `a_database' for `a_tuple_query'.
+		local
+			l_projection: ARRAYED_LIST [STRING]
+		do
+			execute_tuple_query_on_database (a_database, a_tuple_query, <<{AE_DATA_IDENTIFIED}.primary_key_name>>)
+			across a_tuple_query as ic_cursor loop
+				Result := Result + 1
+			end
+			a_tuple_query.close
+		end
 
 	maximum_primary_key (a_database: PS_REPOSITORY; a_tuple_query: PS_TUPLE_QUERY [AE_DATA_IDENTIFIED]): INTEGER_64
 			-- Maximum `primary_key' value from some DATA_IDENTIFIED class.
@@ -47,9 +96,7 @@ feature -- Access
 		local
 			l_projection: ARRAYED_LIST [STRING]
 		do
-			create l_projection.make_from_array (<<{AE_DATA_IDENTIFIED}.primary_key_name>>)
-			a_tuple_query.set_projection (l_projection)
-			a_database.execute_tuple_query (a_tuple_query)
+			execute_tuple_query_on_database (a_database, a_tuple_query, <<{AE_DATA_IDENTIFIED}.primary_key_name>>)
 			across a_tuple_query as ic_cursor loop
 				if attached {INTEGER_64} ic_cursor.item.item (first_tuple_item) as al_item and then al_item > Result then
 					Result := al_item
@@ -57,8 +104,6 @@ feature -- Access
 			end
 			a_tuple_query.close
 		end
-
-	first_tuple_item: INTEGER = 1
 
 	minimum_primary_key (a_database: PS_REPOSITORY; a_tuple_query: PS_TUPLE_QUERY [AE_DATA_IDENTIFIED]): INTEGER_64
 			-- Minimum `primary_key' value from some DATA_IDENTIFIED class.
@@ -76,12 +121,10 @@ feature -- Access
 			l_projection: ARRAYED_LIST [STRING]
 			l_tested: BOOLEAN
 		do
-			create l_projection.make_from_array (<<{AE_DATA_IDENTIFIED}.primary_key_name>>)
-			a_tuple_query.set_projection (l_projection)
-			a_database.execute_tuple_query (a_tuple_query)
+			execute_tuple_query_on_database (a_database, a_tuple_query, <<{AE_DATA_IDENTIFIED}.primary_key_name>>)
 			Result := 1 -- Presumes a result set
 			across a_tuple_query as ic_cursor loop
-				if attached {INTEGER_64} ic_cursor.item.item (1) as al_item and then al_item < Result then
+				if attached {INTEGER_64} ic_cursor.item.item (1) as al_item and then al_item <= Result then
 					Result := al_item
 					l_tested := True
 				end
@@ -91,6 +134,23 @@ feature -- Access
 				Result := {AE_DATA_IDENTIFIED}.no_primary_key
 			end
 			check zero_primary: l_tested implies Result > {AE_DATA_IDENTIFIED}.no_primary_key end
+		end
+
+feature -- Constants
+
+	first_tuple_item: INTEGER = 1
+			-- A counter representing item #1 in a TUPLE. See client accessors usage for example.
+
+feature {NONE} -- Implementation
+
+	execute_tuple_query_on_database (a_database: PS_REPOSITORY; a_tuple_query: PS_TUPLE_QUERY [AE_DATA_IDENTIFIED]; a_fields: ARRAY [STRING])
+			-- Execute `a_tuple_query' on `a_database', possibly returning a result set of `a_fields'.
+		local
+			l_projection: ARRAYED_LIST [STRING]
+		do
+			create l_projection.make_from_array (a_fields)
+			a_tuple_query.set_projection (l_projection)
+			a_database.execute_tuple_query (a_tuple_query)
 		end
 
 end
