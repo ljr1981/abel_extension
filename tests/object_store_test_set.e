@@ -81,6 +81,10 @@ feature -- Test routines
 			l_transaction.commit
 				-- We now have a store object with a test object in the database
 				-- Time to test for various keys and so on.
+			assert_equals ("store_object_primary_key_1", (1).to_integer_64, l_store_object.primary_key)
+			assert_equals ("object_primary_key_1", (1).to_integer_64, l_object.primary_key)
+			assert_equals ("store_ref_to_object_1", (1).to_integer_64, l_store_object.my_child_id)
+			assert_equals ("same_object", l_object, l_store_object.my_child (test_database))
 		end
 
 feature {NONE} -- Implementation: Database
