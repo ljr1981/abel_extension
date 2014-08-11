@@ -1,4 +1,7 @@
 note
+	title: "[
+		ABEL Extension Data Query Library
+		]"
 	description: "[
 		A library of various forms of predefined queries on the basis of OBJs.
 		]"

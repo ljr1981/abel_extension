@@ -1,4 +1,7 @@
 ﻿note
+	title: "[
+		ABEL Extension Data Accessor
+		]"
 	description: "[
 		ABEL Extension for accessing object-agnostic data in a database.
 		]"
