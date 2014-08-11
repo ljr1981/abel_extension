@@ -149,12 +149,12 @@ feature -- Access
 						change the answer. More formally, methods should return a value only if they are referentially 
 						transparent and hence possess no side effects.
 				Magic-numbers: In computer programming, the term magic number has multiple meanings. It could refer to one or more 
-					of the following:
-					* A constant numerical or text value used to identify a file format or protocol; for files, see List of file 
-						signatures
-					* Distinctive unique values that are unlikely to be mistaken for other meanings (e.g., Globally Unique Identifiers)
-					* Unique values with unexplained meaning or multiple occurrences which could (preferably) be replaced with 
-						named constants
+						of the following:
+						* A constant numerical or text value used to identify a file format or protocol; for files, see List of file 
+							signatures
+						* Distinctive unique values that are unlikely to be mistaken for other meanings (e.g., Globally Unique Identifiers)
+						* Unique values with unexplained meaning or multiple occurrences which could (preferably) be replaced with 
+							named constants
 				]"
 			EIS: "name=CQS", "protocol=URI", "tag=glossary", "src=http://en.wikipedia.org/wiki/Command-query_separation"
 			EIS: "name=Magic_numbers", "protocol=URI", "src=http://en.wikipedia.org/wiki/Magic_number_(programming)", "tag=wikipedia"
