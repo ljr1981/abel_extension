@@ -27,6 +27,9 @@ feature -- Access
 	primary_key: INTEGER_64
 			-- Primary Key of Current.
 
+	is_deleted: BOOLEAN
+			-- Is Current marked as deleted?
+
 feature -- Access: Constants
 
 	no_primary_key: INTEGER_64 = 0
@@ -51,10 +54,12 @@ feature -- Basic Operations
 				]"
 		require
 			no_primary_key: primary_key <= no_primary_key
+			not_is_deleted: not is_deleted
 		do
 			set_primary_key ((create {AE_DATA_ACCESSOR}).maximum_primary_key (a_database, tuple_query_anchor) + primary_key_increment_step_value)
 		ensure
 			primary_key_set: primary_key >= some_primary_key
+			not_is_deleted: not is_deleted
 		end
 
 feature -- Settings
@@ -67,10 +72,30 @@ feature -- Settings
 				]"
 		require
 			no_primary_key: primary_key <= no_primary_key
+			not_is_deleted: not is_deleted
 		do
 			primary_key := a_primary_key
 		ensure
 			primary_key_set: primary_key ~ a_primary_key
+			not_is_deleted: not is_deleted
+		end
+
+feature -- Basic Operations
+
+	delete
+			-- Set `is_deleted' to True.
+		do
+			is_deleted := True
+		ensure
+			is_deleted: is_deleted
+		end
+
+	recall
+			-- Set `is_deleted' to False.
+		do
+			is_deleted := False
+		ensure
+			not_is_deleted: not is_deleted
 		end
 
 feature {NONE} -- Implementation: Anchors
