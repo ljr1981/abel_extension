@@ -112,7 +112,7 @@ feature -- Status Report
 								`a_value' will not be properly set up. I will write a test for this soon.
 				]"
 		require
-			no_wildcards: not a_value.has (wildcard_character)
+			no_wildcards: not a_value.has (wildcard_character) -- puts onus for bug on the client. Remove when fixed.
 		local
 			l_value: STRING
 		do
