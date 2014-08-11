@@ -94,7 +94,7 @@ feature -- Basic Operations
 					end
 				end
 			else
-				-- TODO: Do we want to do something about database failures?
+				-- Do we want to do something about database failures?
 			end
 		end
 

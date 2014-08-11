@@ -59,6 +59,8 @@ feature -- Test routines
 				-- Now reverse the matter and lets test the attached version
 			l_obj_b := l_store.attached_object_for_id (test_database, 1)
 			l_obj_a := l_store.attached_object_for_id (test_database, 2)
+			assert_equals ("has_b", l_obj_b, l_store.attached_object_for_id (test_database, l_obj_b.primary_key))
+			assert_equals ("has_a", l_obj_a, l_store.attached_object_for_id (test_database, l_obj_a.primary_key))
 				-- Finally, let's test for something not in the database, like object #3 (we only have #1 and #2).
 			l_obj_c := l_store.object_for_id (test_database, 3)
 			assert ("no_object_for_id_3", not attached l_obj_c)
