@@ -30,6 +30,14 @@ basics: "[<library_cluster_only_basics_of_design>
 		where the target repositories may or may not have the same
 		features available in them. AE_DATA_IDENTIFIED attempts to bring
 		these common facilities like "primary_key" to every database.
+	* AE_OBJECT_STORE facilitates having `primary_key'-based references in objects
+		rather than direct references (e.g. my_feature_id: INTEGER_64 + a
+		my_feature: detachable MY_FEATURE 
+			do Result := (create AE_OBJECT_STORE [MY_FEATURE]).object_for_id (my_feature_id) end
+		This means that each object can be loaded very quickly without
+		having to load the entire object-graph. Facilitates loading the graph
+		only as deep as is needed. However, it does not bar one from loading
+		the deep object graph (e.g. all of it).
 	]"
 usage: "[<optional_statement_of_designer_intended_use>
 	
@@ -93,6 +101,8 @@ bugs: "[<required_for_bugs_with_external_links_as_EIS_if_possible>
 	]"
 todos: "[<required_for_known_todo_action_items_needing_completion>
 	2014 August: Add test code as examples for DATA_* classes, which were recently added.
+	2014 August: Build-out the notion of AE_OBJECT_STORE, *_STORE_AWARE and other natural
+		extensions of the process of object-graph management.
 	]"
 refactors: "[<required_for_known_refactors_needing_completion>
 	2014 August: None
