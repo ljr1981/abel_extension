@@ -28,8 +28,18 @@ feature -- Access
 	my_child_id: INTEGER_64
 			-- The primary key for `my_child'.
 
+	attached_my_child (a_database: PS_REPOSITORY): TEST_OBJECT_ONE
+			-- An attached version of `my_child'.
+		require
+			has_child_id: my_child_id > 0
+		do
+			check attached my_child (a_database) as al_child then Result := al_child end
+		end
+
 	my_child (a_database: PS_REPOSITORY): detachable TEST_OBJECT_ONE
 			-- A test object to play with.
+		require
+			has_child_id: my_child_id > 0
 		do
 			Result := (create {AE_OBJECT_STORE [TEST_OBJECT_ONE]}).object_for_id (a_database, my_child_id)
 		end
