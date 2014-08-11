@@ -17,6 +17,10 @@ note
 			the feature `maximum_primary_key' only cares that the object is 
 			AE_DATA_IDENTIFIED and is unconcerned with a specific type.
 		]"
+	todos: "[
+		2014 August: Consider other functions like STDEV (Standard Deviation) and other math
+						as well as financial functions.
+		]"
 	author: "Larry Rix"
 	date: "$Date$"
 	revision: "$Revision$"
@@ -27,6 +31,18 @@ class
 feature -- Access
 
 	average (a_database: PS_REPOSITORY; a_tuple_query: PS_TUPLE_QUERY [AE_DATA_IDENTIFIED]; a_field_name: STRING): TUPLE [t_average, t_total, t_count: REAL]
+			-- Calculate the average of `a_field_name', based on objects in `a_tuple_query' from `a_database'.
+		note
+			how: "[
+				By executing `a_tuple_query' against `a_field_name', which must be NUMERIC (see cautions note). The
+				Result information includes the average, the total used to calculate it, as well as the count used.
+				]"
+			cautions: "[
+				Presently, you can only average NUMERIC fields.
+				]"
+			todos: "[
+				2014 August: Consider being able to average DECIMAL and MIXED_NUMBER types as well.
+				]"
 		local
 			l_projection: ARRAYED_LIST [STRING]
 			l_counter: INTEGER
@@ -59,6 +75,13 @@ feature -- Access
 
 	count (a_database: PS_REPOSITORY; a_tuple_query: PS_TUPLE_QUERY [AE_DATA_IDENTIFIED]): INTEGER
 			-- Count of objects returned from `a_database' for `a_tuple_query'.
+		note
+			how: "[
+				By counting the unique primary keys.
+				]"
+			todos: "[
+				2014 August: One may want a count based on another query other than primary keys.
+				]"
 		local
 			l_projection: ARRAYED_LIST [STRING]
 		do
@@ -145,6 +168,11 @@ feature {NONE} -- Implementation
 
 	execute_tuple_query_on_database (a_database: PS_REPOSITORY; a_tuple_query: PS_TUPLE_QUERY [AE_DATA_IDENTIFIED]; a_fields: ARRAY [STRING])
 			-- Execute `a_tuple_query' on `a_database', possibly returning a result set of `a_fields'.
+		note
+			how: "[
+				By executing `a_tuple_query' and returning `a_fields' as a collection in the query from `a_database' source.
+				Note that there is no Result as the passed query is "loaded" with the result set.
+				]"
 		local
 			l_projection: ARRAYED_LIST [STRING]
 		do
