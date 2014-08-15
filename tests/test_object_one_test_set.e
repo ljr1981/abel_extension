@@ -51,6 +51,9 @@ feature -- Test routines
 			l_transaction := test_database.new_transaction
 			l_transaction.insert (l_object)
 			l_transaction.commit
+			if l_transaction.has_error then
+				l_transaction.rollback
+			end
 
 			assert_equals ("has_data_id_max_1", (1).to_integer_64, l_object.primary_key)
 
@@ -61,6 +64,9 @@ feature -- Test routines
 			l_transaction := test_database.new_transaction
 			l_transaction.insert (l_object)
 			l_transaction.commit
+			if l_transaction.has_error then
+				l_transaction.rollback
+			end
 
 			assert_equals ("has_data_id_max_2", (2).to_integer_64, l_object.primary_key)
 				-- Test remaining functions (MIN, COUNT, AVG)
