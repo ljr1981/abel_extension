@@ -117,8 +117,8 @@ feature {NONE} -- Documentation
 			attribute
 				Result := Void
 			end
-					
-		data_identified: detachable AE_DATA_IDENTIFIED 
+
+		data_identified: detachable AE_DATA_IDENTIFIED
 			note
 				description: "[
 					is the heart of adding facilities like "primary_key" to
@@ -145,6 +145,11 @@ feature {NONE} -- Documentation
 					only as deep as is needed. However, it does not bar one from loading
 					the deep object graph (e.g. all of it).
 					]"
+				examples: "[
+					Use the local references below to see this class in operation.
+					]"
+			local
+--				l_test: detachable OBJECT_STORE_TEST_SET
 			attribute
 				Result := Void
 			end
