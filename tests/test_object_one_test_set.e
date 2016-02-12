@@ -35,7 +35,7 @@ feature -- Test routines
 				]"
 			how: "[
 				By creating several TEST_OBJECT_ONE items, placing them in the database and then
-				exerciding the database functions in the accessor either directly or through the
+				exercising the database functions in the accessor either directly or through the
 				exercising of the AE_DATA_IDENTIFIED facilities. Specifically, we're looking to
 				test the maximum primary key, minimum primary key, count, and average features.
 				]"
