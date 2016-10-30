@@ -11,9 +11,21 @@ class
 	OBJECT_STORE_TEST_SET
 
 inherit
-	TEST_SET_HELPER
+	EQA_TEST_SET
+		rename
+			assert as assert_old
 		redefine
 			on_prepare
+		end
+
+	EQA_COMMONLY_USED_ASSERTIONS
+		undefine
+			default_create
+		end
+
+	TEST_SET_BRIDGE
+		undefine
+			default_create
 		end
 
 feature {NONE} -- Events
@@ -59,8 +71,8 @@ feature -- Test routines
 				-- Now reverse the matter and lets test the attached version
 			l_obj_b := l_store.attached_object_for_id (test_database, 1)
 			l_obj_a := l_store.attached_object_for_id (test_database, 2)
-			assert_equals ("has_b", l_obj_b, l_store.attached_object_for_id (test_database, l_obj_b.primary_key))
-			assert_equals ("has_a", l_obj_a, l_store.attached_object_for_id (test_database, l_obj_a.primary_key))
+			assert_equal ("has_b", l_obj_b, l_store.attached_object_for_id (test_database, l_obj_b.primary_key))
+			assert_equal ("has_a", l_obj_a, l_store.attached_object_for_id (test_database, l_obj_a.primary_key))
 				-- Finally, let's test for something not in the database, like object #3 (we only have #1 and #2).
 			l_obj_c := l_store.object_for_id (test_database, 3)
 			assert ("no_object_for_id_3", not attached l_obj_c)
@@ -83,10 +95,10 @@ feature -- Test routines
 			l_transaction.commit
 				-- We now have a store object with a test object in the database
 				-- Time to test for various keys and so on.
-			assert_equals ("store_object_primary_key_1", (1).to_integer_64, l_store_object.primary_key)
-			assert_equals ("object_primary_key_1", (1).to_integer_64, l_object.primary_key)
-			assert_equals ("store_ref_to_object_1", (1).to_integer_64, l_store_object.my_child_id)
-			assert_equals ("same_object", l_object, l_store_object.my_child (test_database))
+			assert_equal ("store_object_primary_key_1", (1).to_integer_64, l_store_object.primary_key)
+			assert_equal ("object_primary_key_1", (1).to_integer_64, l_object.primary_key)
+			assert_equal ("store_ref_to_object_1", (1).to_integer_64, l_store_object.my_child_id)
+			assert_equal ("same_object", l_object, l_store_object.my_child (test_database))
 		end
 
 feature {NONE} -- Implementation: Database

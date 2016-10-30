@@ -28,7 +28,7 @@
 			<exclude>/CVS$</exclude>
 			<exclude>/EIFGENs$</exclude>
 		</file_rule>
-		<library name="test_set_helper" location="$GITHUB\test_set_helper\test_set_helper.ecf"/>
+		<library name="test_extension" location="..\test_extension\test_extension.ecf"/>
 		<library name="testing" location="$ISE_LIBRARY\library\testing\testing-safe.ecf"/>
 		<cluster name="tests" location=".\tests\" recursive="true"/>
 	</target>

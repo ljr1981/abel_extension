@@ -11,9 +11,21 @@ class
 	TEST_OBJECT_ONE_TEST_SET
 
 inherit
-	TEST_SET_HELPER
+	EQA_TEST_SET
+		rename
+			assert as assert_old
 		redefine
 			on_prepare
+		end
+
+	EQA_COMMONLY_USED_ASSERTIONS
+		undefine
+			default_create
+		end
+
+	TEST_SET_BRIDGE
+		undefine
+			default_create
 		end
 
 feature {NONE} -- Initialization
@@ -55,7 +67,7 @@ feature -- Test routines
 				l_transaction.rollback
 			end
 
-			assert_equals ("has_data_id_max_1", (1).to_integer_64, l_object.primary_key)
+			assert_equal ("has_data_id_max_1", (1).to_integer_64, l_object.primary_key)
 
 				-- Object two
 			create l_object
@@ -68,15 +80,15 @@ feature -- Test routines
 				l_transaction.rollback
 			end
 
-			assert_equals ("has_data_id_max_2", (2).to_integer_64, l_object.primary_key)
+			assert_equal ("has_data_id_max_2", (2).to_integer_64, l_object.primary_key)
 				-- Test remaining functions (MIN, COUNT, AVG)
-			assert_equals ("has_min_id_of_1", (1).to_integer_64, (create {AE_DATA_ACCESSOR}).minimum_primary_key (test_database, create {PS_TUPLE_QUERY [TEST_OBJECT_ONE]}.make))
-			assert_equals ("has_count_of_2", (2).to_integer_32, (create {AE_DATA_ACCESSOR}).count (test_database, create {PS_TUPLE_QUERY [TEST_OBJECT_ONE]}.make))
+			assert_equal ("has_min_id_of_1", (1).to_integer_64, (create {AE_DATA_ACCESSOR}).minimum_primary_key (test_database, create {PS_TUPLE_QUERY [TEST_OBJECT_ONE]}.make))
+			assert_equal ("has_count_of_2", (2).to_integer_32, (create {AE_DATA_ACCESSOR}).count (test_database, create {PS_TUPLE_QUERY [TEST_OBJECT_ONE]}.make))
 				-- Get the average data and test it
 			l_average_data := (create {AE_DATA_ACCESSOR}).average (test_database, create {PS_TUPLE_QUERY [TEST_OBJECT_ONE]}.make, "primary_key")
-			assert_equals ("has_avg_of_1_1_/_2", (1.5).truncated_to_real, l_average_data.t_average)
-			assert_equals ("has_avg_total_of_3", (3.0).truncated_to_real, l_average_data.t_total)
-			assert_equals ("has_avg_cnt_of_2", (2.0).truncated_to_real, l_average_data.t_count)
+			assert_equal ("has_avg_of_1_1_/_2", (1.5).truncated_to_real, l_average_data.t_average)
+			assert_equal ("has_avg_total_of_3", (3.0).truncated_to_real, l_average_data.t_total)
+			assert_equal ("has_avg_cnt_of_2", (2.0).truncated_to_real, l_average_data.t_count)
 		end
 
 	test_delete_and_recall
